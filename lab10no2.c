@@ -1,24 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct Books{
-    int BookID;
-    char BookTitle[50];
-} ComputerBook;
-void DisplayData(struct Books CBook);
+#include <string.h>
+struct studentRecord {
+    char name[64];
+    int age;
+};
+void displayRecord(struct studentRecord student);
+void addAge(struct studentRecord *student, int age);
 
 int main() {
-    printf("Enter Book ID :");
-    scanf("%d", &ComputerBook.BookID);
+    struct studentRecord student[5];
+    char tempName[64];
+    int i;
 
-    printf("Enter Book Title :");
-    scanf("%s", ComputerBook.BookTitle);
+    for(i = 0; i < 5; i++) {
+        sprintf(tempName, "Student%d", i);
+        strcpy(student[i].name, tempName);
+        student[i].age = i + 15;
+    }
 
-    DisplayData(ComputerBook);
+    for(i = 0; i < 5; i++)
+        addAge(&student[i], 10);
+
+    for(i = 0; i < 5; i++)
+        displayRecord(student[i]);
+
     return 0;
 }
-void DisplayData(struct Books CBook){
-    printf("Book ID : %d \n", CBook.BookID);
-    printf("Book Title : %s \n", CBook.BookTitle);
+void addAge(struct studentRecord *student, int age) {
+    student->age = student->age + age;
 }
-// void DisplayData(struct Books CBook) คือฟังก์ชันสำหรับรับข้อมูลหนังสือ
-// พารามิเตอร์ที่รับเข้ามา คือ struct Books CBook
+void displayRecord(struct studentRecord student) {
+    printf("Name : %s, Age : %d\n", student.name, student.age);
+}
